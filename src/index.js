@@ -7,9 +7,16 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passportLocal = require('passport-local').Strategy;
+const fs = require('fs');
+
+
 
 // Middlewares de configuración antes de rutas y autenticación
 app.use(morgan('dev'));  // Logger
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logfile.log'), { flags: 'a' });
+app.use(morgan('combined', { stream: accessLogStream }));
+
+
 app.use(express.urlencoded({ limit: '10mb', extended: false })); // Tamaño de petición
 app.use(cookieParser('@clavesecreta1603*_cookie')); // Configuración de cookies
 
@@ -76,3 +83,46 @@ const PORT = process.env.PORT || 4600;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+
+
+// Multer para subir archivos
+const multer = require('multer');
+
+const documentsPath = path.join(__dirname, 'public', 'documents');
+if (!fs.existsSync(documentsPath)) {
+    fs.mkdirSync(documentsPath, { recursive: true });
+}
+const upload = multer({ dest: documentsPath });
+
+
+//en upload.single, el nombre, define que debe recibir un archivo con el nombre de imagenPerfil
+app.post('/images/single', upload.single('imagenPerfil'), (req, res) => {
+    SaveImage(req.file);
+    res.send('Imagen subida');
+});
+
+function SaveImage(file) {
+    const newPath = documentsPath + '/' + file.originalname;
+    fs.renameSync(file.path, newPath);
+    return newPath;
+}
+
+
+app.post('/images/multi', upload.array('photos', 10), (req, res) => {
+    req.files.map(SaveImage);
+    res.send('Imagenes subidas');
+});
+
+/*
+{
+  fieldname: 'imagenPerfil',
+  originalname: 'WhatsApp Image 2024-11-10 at 7.32.06 PM.jpeg',
+  encoding: '7bit',
+  mimetype: 'image/jpeg',
+  destination: 'C:\\Users\\brand\\Desktop\\ProyectoColegios\\src\\public\\documents',
+  filename: 'c45bf1b19422794777b93c297a82b21a',
+  path: 'C:\\Users\\brand\\Desktop\\ProyectoColegios\\src\\public\\documents\\c45bf1b19422794777b93c297a82b21a',
+  size: 236458
+}
+*/

@@ -1,15 +1,350 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Dante Velasquez Laos">
+  <meta name="Keywords" content="GRAECO">
+  <title>GRAECO</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    referrerpolicy="no-referrer">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
 </head>
+
 <body>
-    <form action="/login" method="POST">
-        <input type="text" name="username">
-        <input type="password" name="password">
-        <input type="submit" value="enviar">
-    </form>
+  <style>
+    :root {
+      --color-light: white;
+      --color-dark: #212121;
+      --color-signal: #212121;
+      --color-background: var(--color-light);
+      --color-text: var(--color-dark);
+      --color-accent: var(--color-signal);
+      --size-bezel: 0.5rem;
+      --size-radius: 4px;
+      line-height: 1.4;
+      font-family: "Inter", sans-serif;
+      font-size: calc(0.6rem + 0.4vw);
+      color: var(--color-text);
+      background: var(--color-background);
+      font-weight: 300;
+
+    }
+
+    .body {
+      font-family: "Karla", sans-serif;
+      background-color: #fafafa;
+      min-height: 100vh;
+    }
+
+    .brand-wrapper {
+      margin-bottom: 50px;
+    }
+
+    .brand-wrapper .logo {
+      height: 70px;
+    }
+
+    .login-card {
+      border: 0;
+      border-radius: 27.5px;
+      box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+      overflow: hidden;
+    }
+
+    .login-card-img {
+      border-radius: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .login-card .card-body {
+      padding: 85px 60px 60px;
+    }
+
+    @media (max-width: 422px) {
+      .login-card .card-body {
+        padding: 35px 24px;
+      }
+    }
+
+    .login-card-description {
+      font-size: 25px;
+      color: #000;
+      font-weight: normal;
+      margin-bottom: 23px;
+    }
+
+    .login-card form {
+      max-width: 326px;
+    }
+
+    .login-card .form-control {
+      border: 1px solid #d5dae2;
+      padding: 15px 25px;
+      margin-bottom: 20px;
+      min-height: 45px;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .login-card .form-control::-webkit-input-placeholder {
+      color: #919aa3;
+    }
+
+    .login-card .form-control::-moz-placeholder {
+      color: #919aa3;
+    }
+
+    .login-card .form-control:-ms-input-placeholder {
+      color: #919aa3;
+    }
+
+    .login-card .form-control::-ms-input-placeholder {
+      color: #919aa3;
+    }
+
+    .login-card .form-control::placeholder {
+      color: #919aa3;
+    }
+
+    .login-card .forgot-password-link {
+      font-size: 14px;
+      color: #919aa3;
+      margin-bottom: 12px;
+    }
+
+    .login-card-footer-text {
+      font-size: 16px;
+      color: #0d2366;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 767px) {
+      .login-card-footer-text {
+        margin-bottom: 24px;
+      }
+    }
+
+    .login-card-footer-nav a {
+      font-size: 14px;
+      color: #919aa3;
+    }
+
+    .footer-link {
+      position: absolute;
+      bottom: 1rem;
+      text-align: center;
+      width: 100%;
+    }
+
+
+    .login-btn {
+      border-radius: 4px;
+      background-color: #793B8E;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 18px;
+      padding: 8px;
+      width: 150px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .login-btn:hover {
+      background-color: #0FA0A7;
+      color: white;
+    }
+
+    .login-btn span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+
+
+    .login-btn span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+
+    .login-btn:hover span {
+
+      padding-right: 25px;
+    }
+
+    .login-btn:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+
+    .input {
+      position: relative;
+      width: 100%;
+    }
+
+    .input:hover {
+      border-color: #793B8E;
+    }
+
+    .input__label {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: calc(var(--size-bezel) * 0.50) calc(var(--size-bezel) * 0.2);
+      margin: calc(var(--size-bezel) * 0.50 + 3px) calc(var(--size-bezel) * 0.5);
+      transform: translate(0, 0);
+      transform-origin: 0 0;
+      background: var(--color-background);
+      transition: transform 120ms ease-in;
+    }
+
+    .input__field:focus+.input__label,
+    .input__field:not(:placeholder-shown)+.input__label {
+      transform: translate(0.25rem, -65%) scale(0.8);
+      color: var(--color-accent);
+    }
+
+    .span {
+      position: absolute;
+      right: 5px;
+      top: 7px;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 2px 10px;
+      background-color: white;
+    }
+
+    /* Estilos base para todos los dispositivos */
+    .jm-loadingpage {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      display: none;
+      /* Oculta el contenido inicialmente */
+    }
+
+    .imagen-diferido {
+      display: none;
+    }
+
+    .imagen-diferido.logo {
+      max-width: 100%;
+      /* Asegura que la imagen no sea más ancha que su contenedor */
+      max-height: 100%;
+      /* Asegura que la imagen no sea más alta que su contenedor */
+    }
+  </style>
+  <div class="jm-loadingpage">
+    <img class="imagen-diferido logo animate__animated animate__jackInTheBox" data-src="/img/logo/logo.png" alt="logo">
+  </div>
+  <section class="vh-100 content" style="background-color: #fef7ee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card login-card" style="border-radius: 1rem;">
+            <div class="row g-0">
+
+
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img data-src="img/logo/FondoLogin.png"
+                  alt="login form" class="imagen-diferido login-card-img" style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body">
+                  <div class="brand-wrapper">
+                    <img class="imagen-diferido logo animate__animated animate__heartBeat" data-src="img/logo/logo.png"
+                      alt="logo">
+                  </div>
+                  <p class="login-card-description">Bienvenido</p>
+                  <form>
+                    <div class="form-group mb-4">
+                      <label class="input">
+                        <input class="input__field form-control form-control-lg" id="username" name="username"
+                          type="text" autocomplete="current-password" placeholder=" " required autofocus>
+                        <span class="input__label">Usuario</span>
+                        <span class="span"><i class="bi bi-person"></i></span>
+                      </label>
+                    </div>
+                    <div class="form-group mb-4">
+                      <label class="input">
+                        <input class="input__field form-control form-control-lg" id="password" name="password"
+                          autocomplete="current-password" type="password" placeholder=" " required>
+                        <span class="input__label">Contraseña</span>
+                        <span class="span"><i class="bi bi-eye-slash" id="togglePassword"></i></span>
+                      </label>
+                    </div>
+
+
+                    <button type="submit"
+                      class="login-btn btn-block animate__animated animate__headShake animate__infinite w-100" id="btn">
+                      <span>Ingresar</span>
+                    </button>
+                  </form>
+                  <a href="#!" id="btn-modal" class="forgot-password-link">¿Has olvidado tu contraseña?</a>
+                  <br><br><br>
+                  <nav class="login-card-footer-nav">
+                    <a href="#!" id="btn-modal1">Términos de uso.</a>
+                    <a href="#!">Política de privacidad</a>
+                  </nav>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function () {
+      var imagenesDiferido = document.querySelectorAll('.imagen-diferido');
+      for (var i = 0; i < imagenesDiferido.length; i++) {
+        var imagen = imagenesDiferido[i];
+        var src = imagen.getAttribute('data-src');
+        if (src) {
+          imagen.setAttribute('src', src);
+          imagen.style.display = 'block';
+        }
+      }
+
+      // Desvanecer el div de carga después de un tiempo
+      setTimeout(function () {
+        $(".jm-loadingpage").fadeOut("slow", function () {
+          $(".content").fadeIn("slow");
+          //document.getElementById("username").focus();
+        });
+      }, 800);
+
+    });
+  </script>
 </body>
+
 </html>
